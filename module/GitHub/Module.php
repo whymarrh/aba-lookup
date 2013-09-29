@@ -19,4 +19,13 @@ class Module
 	{
 		return include realpath(sprintf('%s/config/module.config.php', __DIR__));
 	}
+
+	public function getViewHelperConfig()
+	{
+		return [
+			'invokables' => [
+				'avatars' => 'GitHub\View\Helper\Avatars',
+			],
+		];
+	}
 }

@@ -9,6 +9,8 @@ use
 
 class Api
 {
+	const SORT_BY_USERNAME = 'sortByUsername';
+
 	private $user;
 	private $repo;
 
@@ -18,9 +20,21 @@ class Api
 		$this->repo = $repo;
 	}
 
-	public function getContributors()
+	public function getContributors($order = NULL)
 	{
 		$response = HttpClient::get(sprintf(Url::CONTRIBUTORS, $this->user, $this->repo));
-		return Json::decode($response->getBody());
+		$contributors = Json::decode($response->getBody());
+		if (
+			   isset($order)
+			&& is_callable([$this, $order])
+		) {
+			uasort($contributors, [$this, $order]);
+		}
+		return $contributors;
+	}
+
+	private function sortByUsername($a, $b)
+	{
+		return strcasecmp($a->login, $b->login);
 	}
 }

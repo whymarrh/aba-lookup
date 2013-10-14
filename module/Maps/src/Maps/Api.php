@@ -34,7 +34,7 @@ class Api
 	 * @return LatLng
 	 * @throws InvalidArgumentException
 	 */
-	public function getLatLng($address, $region = 'ca')
+	public function geocode($address, $region = 'ca')
 	{
 		return GeocodingApi::getLatLng($address, $region);
 	}

@@ -4,6 +4,7 @@ namespace MapsTest;
 
 use
 	Maps\Api,
+	Maps\Geocoding\StatusCode as GeocodingStatusCode,
 	PHPUnit_Framework_TestCase
 ;
 
@@ -26,7 +27,7 @@ class ApiTest extends PHPUnit_Framework_TestCase
 		$this->assertInstanceOf('Maps\Api', $this->api);
 	}
 
-	public function testGetLatLngForPostalCode()
+	public function testGeocodeGivenPostalCode()
 	{
 		$address = 'A1B 3X9';
 		$this->assertInternalType('string', $address);
@@ -36,6 +37,15 @@ class ApiTest extends PHPUnit_Framework_TestCase
 		$this->assertInternalType('float', $latLng->getLng());
 		$this->assertEquals( 47.5709447, $latLng->getLat());
 		$this->assertEquals(-52.7305255, $latLng->getLng());
+	}
+
+	public function testGeocodeNonExistentAddress()
+	{
+		$this->setExpectedException(
+			'Maps\Geocoding\GeocodingException',
+			GeocodingStatusCode::ZERO_RESULTS
+		);
+		$latLng = $this->api->geocode('This is not a real address.');
 	}
 
 	public function testCalculateDistanceMatrixWithSingleOriginToSingleDestination()

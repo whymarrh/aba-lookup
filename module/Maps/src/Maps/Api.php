@@ -32,7 +32,8 @@ class Api
 	 * @param string $address The address to geocode.
 	 * @param string $region The ccTLD of a region to bias towards. Defaults is Canada.
 	 * @return LatLng
-	 * @throws InvalidArgumentException
+	 * @throws InvalidArgumentException If the given parameters are not vaild types.
+	 * @throws GeocodingException If the provided address does not translate.
 	 */
 	public function geocode($address, $region = 'ca')
 	{

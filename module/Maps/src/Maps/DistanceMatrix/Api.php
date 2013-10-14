@@ -34,10 +34,12 @@ class Api
 	 * @param array $origins The array of origin addresses to calculate.
 	 * @param array $destinations The array of destination addresses to calculate.
 	 * @param string $value The value the matrix should contain for each index. Either 'distance' or 'direction'.
+	 * @param bool $retry Is this a 2nd attempt at this request.
 	 * @return array The two-dimensional matrix.
-	 * @throws InvalidArgumentException
+	 * @throws InvalidArgumentException If the given parameters are not vaild types.
+	 * @throws DistanceMatrixException If the API returns a status code other than OK.
 	 */
-	public static function calculateMatrix(array $origins, array $destinations, $value)
+	public static function calculateMatrix(array $origins, array $destinations, $value, $retry = FALSE)
 	{
 		if (!is_string($value)) {
 			throw new InvalidArgumentException('The value must be a string.');
@@ -61,6 +63,21 @@ class Api
 			implode('|', array_map('urlencode', $destinations))
 		));
 		$result = Json::decode($response->getBody());
+		switch ($result->status) {
+			case StatusCode::OK:
+				// All good.
+				break;
+			case StatusCode::UNKNOWN_ERROR:
+				if (!$retry) {
+					Api::calculateMatrix($origins, $destinations, $value, TRUE);
+				}
+			case StatusCode::INVALID_REQUEST:
+			case StatusCode::MAX_ELEMENTS_EXCEEDED:
+			case StatusCode::OVER_QUERY_LIMIT:
+			case StatusCode::REQUEST_DENIED:
+				throw new DistanceMatrixException($result->status);
+				break;
+		}
 		// We're going to transfer the result data into a "more compact" structure.
 		// $result will typically look like this (you can imagine a larger version):
 		//
@@ -119,7 +136,17 @@ class Api
 			$elements = &$result->rows[$i]->elements;
 			$count = count($elements);
 			for ($j = 0; $j < $count; ++$j) {
-				$matrix[$i][] = $elements[$j]->{$value}->value;
+				$element = $elements[$j];
+				switch ($element->status) {
+					case StatusCode::OK:
+						// All good.
+						break;
+					case StatusCode::NOT_FOUND:
+					case StatusCode::ZERO_RESULTS:
+						throw new DistanceMatrixException($element->status);
+						break;
+				}
+				$matrix[$i][] = $element->{$value}->value;
 			}
 		}
 		return $matrix;

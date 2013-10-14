@@ -8,11 +8,6 @@ In the box:
 - [Distance Matrix API]
 - [Geocoding API]
 
-To-do:
-
-- Error handling
-- Rate limits
-
 Accessing the API
 -----------------
 

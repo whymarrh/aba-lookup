@@ -40,6 +40,18 @@ class ApiTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals(-52.7305255, $latLng->getLng());
 	}
 
+	public function testGeocodeNonStringAddress()
+	{
+		$this->setExpectedException('InvalidArgumentException');
+		$this->api->geocode(3);
+	}
+
+	public function testGeocodeNonStringRegion()
+	{
+		$this->setExpectedException('InvalidArgumentException');
+		$this->api->geocode('A1B 3X9', NULL);
+	}
+
 	public function testGeocodeNonExistentAddress()
 	{
 		$this->setExpectedException(
@@ -47,6 +59,12 @@ class ApiTest extends PHPUnit_Framework_TestCase
 			GeocodingStatusCode::ZERO_RESULTS
 		);
 		$latLng = $this->api->geocode('This is not a real address.');
+	}
+
+	public function testCalculateDistanceMatrixWithNonStringValue()
+	{
+		$this->setExpectedException('InvalidArgumentException');
+		$this->api->calculateDistanceMatrix([], [], 3);
 	}
 
 	public function testCalculateDistanceMatrixWithSingleOriginToSingleDestination()

@@ -4,6 +4,7 @@ namespace MapsTest;
 
 use
 	Maps\Api,
+	Maps\DistanceMatrix\StatusCode as DistanceMatrixStatusCode,
 	Maps\Geocoding\StatusCode as GeocodingStatusCode,
 	PHPUnit_Framework_TestCase
 ;
@@ -100,5 +101,38 @@ class ApiTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals( 973433, $matrix[2][1]); // BC Place to Calgary Zoo
 		$this->assertEquals(1154018, $matrix[2][2]); // BC Place to West Edmonton Mall
 		$this->assertEquals(7445037, $matrix[2][3]); // BC Place to Cape Spear
+	}
+
+	public function testCalculateDistanceMatrixWithNoDestination()
+	{
+		$this->setExpectedException('InvalidArgumentException');
+		$this->api->calculateDistanceMatrix(['A1B 3X9'], []);
+	}
+
+	public function testCalculateDistanceMatrixWithEmptyArrays()
+	{
+		$this->setExpectedException('InvalidArgumentException');
+		$this->api->calculateDistanceMatrix([], []);
+	}
+
+	public function testCalculateDistanceMatrixWithNonStringOrigin()
+	{
+		$this->setExpectedException('InvalidArgumentException');
+		$this->api->calculateDistanceMatrix([3], ['A1B 3X9']);
+	}
+
+	public function testCalculateDistanceMatrixWithNonStringDistance()
+	{
+		$this->setExpectedException('InvalidArgumentException');
+		$this->api->calculateDistanceMatrix(['A1B 3X9'], [3]);
+	}
+
+	public function testCalculateDistanceMatrixWithNonExistentOrigin()
+	{
+		$this->setExpectedException(
+			'Maps\DistanceMatrix\DistanceMatrixException',
+			DistanceMatrixStatusCode::NOT_FOUND
+		);
+		$this->api->calculateDistanceMatrix(['this is not a real origin'], ['A1B 3X9']);
 	}
 }

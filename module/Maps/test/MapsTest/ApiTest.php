@@ -30,7 +30,7 @@ class ApiTest extends PHPUnit_Framework_TestCase
 	{
 		$address = 'A1B 3X9';
 		$this->assertInternalType('string', $address);
-		$latLng = $this->api->getLatLng($address, 'ca');
+		$latLng = $this->api->geocode($address, 'ca');
 		$this->assertInstanceOf('Maps\LatLng', $latLng);
 		$this->assertInternalType('float', $latLng->getLat());
 		$this->assertInternalType('float', $latLng->getLng());

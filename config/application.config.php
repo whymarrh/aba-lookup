@@ -3,6 +3,7 @@
 return [
 	'modules' => [
 		'AbaLookup',
+		'GitHub',
 		'Lookup',
 	],
 	'module_listener_options' => [

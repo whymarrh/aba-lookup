@@ -51,9 +51,12 @@ class HomeController extends AbaLookupController
 
 	public function aboutAction()
 	{
-		return [
-			'user' => $this->user,
-		];
+		$view = $this->indexAction();
+		// GitHub API
+		$api = $this->getServiceLocator()->get('GitHub\Api');
+		$view['contributors'] = $api->getContributors($api::SORT_BY_USERNAME);
+		$view['user'] = $this->user;
+		return $view;
 	}
 
 	public function termsAction()

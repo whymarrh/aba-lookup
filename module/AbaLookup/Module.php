@@ -29,9 +29,9 @@ class Module
 	{
 		$response = $e->getResponse();
 		$response->getHeaders()
-		         ->addHeaderLine('Content-Security-Policy', 'default-src \'self\'; img-src \'self\' https://*.gravatar.com https://*.github.com');
+		         ->addHeaderLine('Content-Security-Policy', 'default-src \'self\'; img-src \'self\' https://*.githubusercontent.com');
 	}
-	
+
 	/**
 	 * Returns the module configuration
 	 */

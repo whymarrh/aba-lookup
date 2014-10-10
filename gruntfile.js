@@ -161,6 +161,6 @@ module.exports = function (grunt) {
 
 	// Default task
 	grunt.registerTask('default', 'Does nothing', function () {
-		grunt.log.writeln('Doing nothing');
+		grunt.help.display();
 	});
 };

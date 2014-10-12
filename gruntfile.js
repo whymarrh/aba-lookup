@@ -130,7 +130,7 @@ module.exports = function (grunt) {
 
 	// Bower
 	grunt.registerTask('bower', 'Manage client-side dependencies via Bower', function (command) {
-		if (!command) {
+		if (command != 'install') {
 			return;
 		}
 

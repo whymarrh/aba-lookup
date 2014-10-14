@@ -4,7 +4,7 @@ namespace Lookup\Entity;
 
 class User
 {
-	use Trait\Uuid;
+	use Uuid;
 
 	/**
 	 * The display name for user

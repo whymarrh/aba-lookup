@@ -1,6 +1,6 @@
 <?php
 
-namespace Lookup\Entity\Trait;
+namespace Lookup\Entity;
 
 trait Uuid
 {

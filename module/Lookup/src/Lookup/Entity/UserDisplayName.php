@@ -4,7 +4,7 @@ namespace Lookup\Entity;
 
 class UserDisplayName
 {
-	use Trait\Id;
+	use Id;
 
 	/**
 	 * The user to whom the display name belongs

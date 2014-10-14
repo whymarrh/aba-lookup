@@ -4,7 +4,7 @@ namespace Lookup\Entity;
 
 class UserType
 {
-	use Trait\Id;
+	use Id;
 
 	/**
 	 * The name of the type.

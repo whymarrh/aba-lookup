@@ -4,7 +4,7 @@ namespace Lookup\Entity;
 
 class ScheduleInterval
 {
-	use Trait\Id;
+	use Id;
 
 	/**
 	 * The start time for this interval

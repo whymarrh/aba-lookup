@@ -4,7 +4,7 @@ namespace Lookup\Entity;
 
 class Account
 {
-	use Trait\Uuid;
+	use Uuid;
 
 	/**
 	 * The user for the account

@@ -4,7 +4,7 @@ namespace Lookup\Entity;
 
 class Score
 {
-	use Trait\Id;
+	use Id;
 
 	/**
 	 * User A of the pair

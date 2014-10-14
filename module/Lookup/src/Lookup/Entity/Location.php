@@ -2,7 +2,7 @@
 
 class Location
 {
-	use Trait\Id;
+	use Id;
 
 	/**
 	 * The city name

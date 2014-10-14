@@ -4,7 +4,7 @@ namespace Lookup\Entity;
 
 class LocationDistance
 {
-	use Trait\Id;
+	use Id;
 
 	/**
 	 * Location A

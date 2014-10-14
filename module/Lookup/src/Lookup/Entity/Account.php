@@ -224,7 +224,7 @@ class Account
 			));
 		}
 		$this->termsOfService = $termsOfService;
-		return self;
+		return $this;
 	}
 
 	/**
@@ -273,7 +273,7 @@ class Account
 	 */
 	public function getEmail()
 	{
-		return $email;
+		return $this->email;
 	}
 
 	/**

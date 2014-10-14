@@ -33,6 +33,7 @@ class LocationDistance
 	 * @param int $id The ID for the entity.
 	 * @param Location $a Location A.
 	 * @param Location $b Location B.
+	 * @param int $distance The distance between location A and B.
 	 * @throws Exception\InvalidArgumentException
 	 */
 	public function __construct($id, Location $a, Location $b, $distance)

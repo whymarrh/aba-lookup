@@ -1,5 +1,7 @@
 <?php
 
+namespace Lookup\Entity;
+
 class Location
 {
 	use Id;

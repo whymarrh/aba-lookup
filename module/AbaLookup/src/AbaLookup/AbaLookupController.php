@@ -35,6 +35,7 @@ abstract class AbaLookupController extends AbstractActionController implements S
 			self::EVENT_PRIORITY_BEFORE_ACTION
 		);
 	}
+
 	/**
 	 * Set service locator
 	 *

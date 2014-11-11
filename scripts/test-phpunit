@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-DIR="module/AbaLookup/test/"
+MODULE=${MODULE:-ABALookup}
+DIR="module/$MODULE/test/"
 
 cd $DIR
 ../../../vendor/bin/phpunit --verbose || exit 1

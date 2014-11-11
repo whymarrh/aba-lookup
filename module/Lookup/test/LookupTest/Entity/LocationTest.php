@@ -11,12 +11,14 @@ class LocationTest extends PHPUnit_Framework_TestCase
 
 	protected function setUp()
 	{
-		$this->location = new Location(4, 'foo', 'bar');
+		$this->location = new Location('foo', 'bar');
 	}
 
-	public function testGetId()
+	public function testSetGetId()
 	{
-		$this->assertEquals(4, $this->location->getId());
+		$id = 42;
+		$this->location->setId($id);
+		$this->assertEquals($id, $this->location->getId());
 	}
 
 	public function testGetCity()

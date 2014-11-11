@@ -30,18 +30,16 @@ class LocationDistance
 	/**
 	 * Constructor
 	 *
-	 * @param int $id The ID for the entity.
 	 * @param Location $a Location A.
 	 * @param Location $b Location B.
 	 * @param int $distance The distance between location A and B.
 	 * @throws Exception\InvalidArgumentException
 	 */
-	public function __construct($id, Location $a, Location $b, $distance)
+	public function __construct(Location $a, Location $b, $distance)
 	{
-		$this->setId($id)
-		     ->setLocationA($a)
-		     ->setLocationB($b)
-		     ->setDistance($distance);
+		$this->setLocationA($a);
+		$this->setLocationB($b);
+		$this->setDistance($distance);
 	}
 
 	/**

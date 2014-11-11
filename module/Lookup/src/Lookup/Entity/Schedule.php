@@ -23,16 +23,14 @@ class Schedule
 	/**
 	 * Constructor
 	 *
-	 * @param int $id The ID for this entity.
 	 * @param string $name The name for the schedule.
 	 * @param bool $enabled Is the schedule active?
 	 * @throws Exception\InvalidArgumentException
 	 */
-	public function __construct($id, $name, $enabled)
+	public function __construct($name, $enabled)
 	{
-		$this->setId($id)
-		     ->setEnabled($enabled)
-		     ->setName($name);
+		$this->setEnabled($enabled);
+		$this->setName($name);
 	}
 
 	/**

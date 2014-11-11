@@ -72,7 +72,6 @@ class Account
 	/**
 	 * Constructor
 	 *
-	 * @param string $id The UUID for the account.
 	 * @param User $user The user for the account.
 	 * @param string $password The password for the account.
 	 * @param string|NULL $passwordResetCode The password reset code.
@@ -84,18 +83,17 @@ class Account
 	 * @param int $creationTime The time at which the account was created.
 	 * @throws Exception\InvalidArgumentException
 	 */
-	public function __construct($id, User $user, $password, $passwordResetCode, $email, $emailConfirmed, $emailConfirmCode, $accessLevel, $termsOfService, $creationTime)
+	public function __construct(User $user, $password, $passwordResetCode, $email, $emailConfirmed, $emailConfirmCode, $accessLevel, $termsOfService, $creationTime)
 	{
-		$this->setId($id)
-		     ->setUser($user)
-		     ->setPassword($password)
-		     ->setPasswordResetCode($passwordResetCode)
-		     ->setEmail($email)
-		     ->setEmailConfirmed($emailConfirmed)
-		     ->setEmailConfirmCode($emailConfirmCode)
-		     ->setAccessLevel($accessLevel)
-		     ->setTermsOfService($termsOfService)
-		     ->setCreationTime($creationTime);
+		$this->setUser($user);
+		$this->setPassword($password);
+		$this->setPasswordResetCode($passwordResetCode);
+		$this->setEmail($email);
+		$this->setEmailConfirmed($emailConfirmed);
+		$this->setEmailConfirmCode($emailConfirmCode);
+		$this->setAccessLevel($accessLevel);
+		$this->setTermsOfService($termsOfService);
+		$this->setCreationTime($creationTime);;
 	}
 
 	/**

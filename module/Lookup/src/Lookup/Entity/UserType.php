@@ -16,14 +16,12 @@ class UserType
 	/**
 	 * Constructor
 	 *
-	 * @param int $id The ID for the entity.
 	 * @param string|NULL $name The name of the type.
 	 * @throws Exception\InvalidArgumentException
 	 */
-	public function __construct($id, $name)
+	public function __construct($name)
 	{
-		$this->setId($id)
-		     ->setName($name);
+		$this->setName($name);
 	}
 
 	/**

@@ -18,7 +18,7 @@ trait Id
 	 * @throws Exception\InvalidArgumentException If the ID is not an int.
 	 * @return self
 	 */
-	private final function setId($id)
+	public final function setId($id)
 	{
 		if (!is_int($id)) {
 			throw new Exception\InvalidArgumentException(sprintf(

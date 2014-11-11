@@ -18,7 +18,7 @@ trait Uuid
 	 * @throws Exception\InvalidArgumentException If the UUID is not a string.
 	 * @return self
 	 */
-	private final function setId($id)
+	public final function setId($id)
 	{
 		if (!is_string($id)) {
 			throw new Exception\InvalidArgumentException(sprintf(

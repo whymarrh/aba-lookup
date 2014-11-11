@@ -63,7 +63,8 @@ class User
 	private $creationTime;
 
 	/**
-	 * @param int $id The UUID for the entity.
+	 * Constructor
+	 *
 	 * @param UserDisplayName $displayName The display name for the user.
 	 * @param UserType $userType The type of the user.
 	 * @param Location $location The location of the user.
@@ -74,16 +75,16 @@ class User
 	 * @param int $creationTime The time at which the user was created.
 	 * @throws Exception\InvalidArgumentException
 	 */
-	public function __construct($id, UserDisplayName $displayName, UserType $userType, Location $location, $gender, $phoneNumber, $abaCourse, $certificateOfConduct, $creationTime) {
-		$this->setId($id)
-		     ->setDisplayName($displayName)
-		     ->setUserType($userType)
-		     ->setLocation($location)
-		     ->setGender($gender)
-		     ->setPhoneNumber($phoneNumber)
-		     ->setAbaCourse($abaCourse)
-		     ->setCertificateOfConduct($certificateOfConduct)
-		     ->setCreationTime($creationTime);
+	public function __construct(UserDisplayName $displayName, UserType $userType, Location $location, $gender, $phoneNumber, $abaCourse, $certificateOfConduct, $creationTime)
+	{
+		$this->setDisplayName($displayName);
+		$this->setUserType($userType);
+		$this->setLocation($location);
+		$this->setGender($gender);
+		$this->setPhoneNumber($phoneNumber);
+		$this->setAbaCourse($abaCourse);
+		$this->setCertificateOfConduct($certificateOfConduct);
+		$this->setCreationTime($creationTime);
 	}
 
 	/**

@@ -14,7 +14,7 @@ class UserDisplayNameTest extends PHPUnit_Framework_TestCase
 	protected function setUp()
 	{
 		$this->user = Mockery::mock('Lookup\Entity\User');
-		$this->displayName = new UserDisplayName(4, $this->user, 'foo', 42);
+		$this->displayName = new UserDisplayName($this->user, 'foo', 42);
 	}
 
 	protected function tearDown()
@@ -22,9 +22,11 @@ class UserDisplayNameTest extends PHPUnit_Framework_TestCase
 		Mockery::close();
 	}
 
-	public function testGetId()
+	public function testSetGetId()
 	{
-		$this->assertEquals(4, $this->displayName->getId());
+		$id = 42;
+		$this->displayName->setId($id);
+		$this->assertEquals($id, $this->displayName->getId());
 	}
 
 	public function testGetUser()

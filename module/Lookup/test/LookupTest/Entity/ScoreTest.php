@@ -18,7 +18,7 @@ class ScoreTest extends PHPUnit_Framework_TestCase
 		$this->userA = Mockery::mock('Lookup\Entity\User');
 		$this->userB = Mockery::mock('Lookup\Entity\User');
 		$this->schedule = Mockery::mock('Lookup\Entity\Schedule');
-		$this->score = new Score(1, $this->userA, $this->userB, $this->schedule, 42);
+		$this->score = new Score($this->userA, $this->userB, $this->schedule, 42);
 	}
 
 	protected function tearDown()
@@ -26,9 +26,11 @@ class ScoreTest extends PHPUnit_Framework_TestCase
 		Mockery::close();
 	}
 
-	public function testGetId()
+	public function testSetGetId()
 	{
-		$this->assertEquals(1, $this->score->getId());
+		$id = 42;
+		$this->score->setId($id);
+		$this->assertEquals($id, $this->score->getId());
 	}
 
 	public function testGetA()

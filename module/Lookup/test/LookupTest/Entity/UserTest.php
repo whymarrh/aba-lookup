@@ -18,7 +18,7 @@ class UserTest extends PHPUnit_Framework_TestCase
 		$this->location = Mockery::mock('Lookup\Entity\Location');
 		$this->userType = Mockery::mock('Lookup\Entity\UserType');
 		$this->displayName = Mockery::mock('Lookup\Entity\UserDisplayName');
-		$this->user = new User('foo-bar-baz', $this->displayName, $this->userType, $this->location, 'foo', 'bar', FALSE, 3, 4);
+		$this->user = new User($this->displayName, $this->userType, $this->location, 'foo', 'bar', FALSE, 3, 4);
 	}
 
 	protected function tearDown()
@@ -26,9 +26,11 @@ class UserTest extends PHPUnit_Framework_TestCase
 		Mockery::close();
 	}
 
-	public function testGetId()
+	public function testSetGetId()
 	{
-		$this->assertEquals('foo-bar-baz', $this->user->getId());
+		$id = 'foo-bar-baz';
+		$this->user->setId($id);
+		$this->assertEquals($id, $this->user->getId());
 	}
 
 	public function testGetDisplayName()

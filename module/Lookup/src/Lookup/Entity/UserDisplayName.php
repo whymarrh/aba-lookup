@@ -28,18 +28,18 @@ class UserDisplayName
 	private $creationTime;
 
 	/**
-	 * @param int $id The ID for the entity.
+	 * Constructor
+	 *
 	 * @param User|NULL $user The user.
 	 * @param string $displayName The display name.
 	 * @param int $creationTime The time at which this display name was created.
 	 * @throws Exception\InvalidArgumentException
 	 */
-	public function __construct($id, $user, $displayName, $creationTime)
+	public function __construct($user, $displayName, $creationTime)
 	{
-		$this->setId($id)
-		     ->setUser($user)
-		     ->setDisplayName($displayName)
-		     ->setCreationTime($creationTime);
+		$this->setUser($user);
+		$this->setDisplayName($displayName);
+		$this->setCreationTime($creationTime);
 	}
 
 	/**

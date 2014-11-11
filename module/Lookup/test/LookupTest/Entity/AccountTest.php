@@ -14,7 +14,7 @@ class AccountTest extends PHPUnit_Framework_TestCase
 	protected function setUp()
 	{
 		$this->user = Mockery::mock('Lookup\Entity\User');
-		$this->account = new Account('foo-bar-baz', $this->user, 'passw0rd', NULL, 'foo@bar.com', TRUE, NULL, 3, 4, 5);
+		$this->account = new Account($this->user, 'passw0rd', NULL, 'foo@bar.com', TRUE, NULL, 3, 4, 5);
 	}
 
 	protected function tearDown()
@@ -22,9 +22,11 @@ class AccountTest extends PHPUnit_Framework_TestCase
 		Mockery::close();
 	}
 
-	public function testGetId()
+	public function testSetGetId()
 	{
-		$this->assertEquals('foo-bar-baz', $this->account->getId());
+		$id = 'foo-bar-baz';
+		$this->account->setId($id);
+		$this->assertEquals($id, $this->account->getId());
 	}
 
 	public function testGetUser()

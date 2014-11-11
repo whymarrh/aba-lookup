@@ -11,12 +11,14 @@ class ScheduleIntervalTest extends PHPUnit_Framework_TestCase
 
 	protected function setUp()
 	{
-		$this->interval = new ScheduleInterval(4, 5, 6, 7);
+		$this->interval = new ScheduleInterval(5, 6, 7);
 	}
 
-	public function testGetId()
+	public function testSetGetId()
 	{
-		$this->assertEquals(4, $this->interval->getId());
+		$id = 42;
+		$this->interval->setId($id);
+		$this->assertEquals($id, $this->interval->getId());
 	}
 
 	public function testGetStartTime()

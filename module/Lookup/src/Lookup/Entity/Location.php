@@ -23,15 +23,14 @@ class Location
 	/**
 	 * Constructor
 	 *
-	 * @param int $id The ID for the entity.
 	 * @param string $city The city name.
 	 * @param string $postalCode The postal code.
+	 * @throws Exception\InvalidArgumentException
 	 */
-	public function __construct($id, $city, $postalCode)
+	public function __construct($city, $postalCode)
 	{
-		$this->setId($id)
-		     ->setCity($city)
-		     ->setPostalCode($postalCode);
+		$this->setCity($city);
+		$this->setPostalCode($postalCode);
 	}
 
 	/**

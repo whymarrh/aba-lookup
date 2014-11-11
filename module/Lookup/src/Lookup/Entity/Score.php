@@ -40,20 +40,18 @@ class Score
 	/**
 	 * Constructor
 	 *
-	 * @param int $id The ID for this entity.
 	 * @param User $a The 1st user of the user pair.
 	 * @param User $a The 2nd user of the user pair.
 	 * @param Schedule $schedule The combined schedule of the two users.
 	 * @param int $score The score for this pair.
 	 * @throws Exception\InvalidArgumentException
 	 */
-	public function __construct($id, User $a, User $b, Schedule $schedule, $score)
+	public function __construct(User $a, User $b, Schedule $schedule, $score)
 	{
-		$this->setId($id)
-		     ->setUserA($a)
-		     ->setUserB($b)
-		     ->setSchedule($schedule)
-		     ->setScore($score);
+		$this->setUserA($a);
+		$this->setUserB($b);
+		$this->setSchedule($schedule);
+		$this->setScore($score);
 	}
 
 	/**

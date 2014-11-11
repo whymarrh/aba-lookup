@@ -11,12 +11,14 @@ class UserTypeTest extends PHPUnit_Framework_TestCase
 
 	protected function setUp()
 	{
-		$this->type = new UserType(42, 'foo');
+		$this->type = new UserType('foo');
 	}
 
-	public function testGetId()
+	public function testSetGetId()
 	{
-		$this->assertEquals(42, $this->type->getId());
+		$id = 42;
+		$this->type->setId($id);
+		$this->assertEquals($id, $this->type->getId());
 	}
 
 	public function testGetName()

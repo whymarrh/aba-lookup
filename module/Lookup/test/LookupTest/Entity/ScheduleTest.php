@@ -11,12 +11,14 @@ class ScheduleTest extends PHPUnit_Framework_TestCase
 
 	protected function setUp()
 	{
-		$this->schedule = new Schedule(5, 'foo', FALSE);
+		$this->schedule = new Schedule('foo', FALSE);
 	}
 
-	public function testGetId()
+	public function testSetGetId()
 	{
-		$this->assertEquals(5, $this->schedule->getId());
+		$id = 42;
+		$this->schedule->setId($id);
+		$this->assertEquals($id, $this->schedule->getId());
 	}
 
 	public function testGetName()

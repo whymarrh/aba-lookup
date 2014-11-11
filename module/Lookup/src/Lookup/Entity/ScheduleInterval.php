@@ -30,18 +30,16 @@ class ScheduleInterval
 	/**
 	 * Constructor
 	 *
-	 * @param int $id The ID for the entity.
 	 * @param int $startTime The start time for the interval.
 	 * @param int $endTime The end time for the interval.
 	 * @param int $weekday The weekday of this interval.
 	 * @throws Exception\InvalidArgumentException
 	 */
-	public function __construct($id, $startTime, $endTime, $weekday)
+	public function __construct($startTime, $endTime, $weekday)
 	{
-		$this->setId($id)
-		     ->setStartTime($startTime)
-		     ->setEndTime($endTime)
-		     ->setWeekday($weekday);
+		$this->setStartTime($startTime);
+		$this->setEndTime($endTime);
+		$this->setWeekday($weekday);
 	}
 
 	/**

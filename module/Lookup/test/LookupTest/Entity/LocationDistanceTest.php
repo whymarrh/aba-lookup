@@ -16,7 +16,7 @@ class LocationDistanceTest extends PHPUnit_Framework_TestCase
 	{
 		$this->a = Mockery::mock('Lookup\Entity\Location');
 		$this->b = Mockery::mock('Lookup\Entity\Location');
-		$this->distance = new LocationDistance(1, $this->a, $this->b, 42);
+		$this->distance = new LocationDistance($this->a, $this->b, 42);
 	}
 
 	protected function tearDown()
@@ -24,9 +24,11 @@ class LocationDistanceTest extends PHPUnit_Framework_TestCase
 		Mockery::close();
 	}
 
-	public function testGetId()
+	public function testSetGetId()
 	{
-		$this->assertEquals(1, $this->distance->getId());
+		$id = 42;
+		$this->distance->setId($id);
+		$this->assertEquals($id, $this->distance->getId());
 	}
 
 	public function testGetLocationA()

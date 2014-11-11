@@ -2,28 +2,29 @@
 
 set -e
 
-# run from the root directory
+# Run from the root directory
 cd "$(dirname "$0")/../"
 
 dbfile="database/db.sqlite3"
 sqlfile="scripts/schemata/schema.sqlite3.sql"
 
-if [[ -e $dbfile ]]; then
+if [[ -e "$dbfile" ]]
+then
 	read  -n 1 -r -p "Are you sure you wish to delete the existing database [y/N]? " response
 	echo
-	if [[ $response =~ ^[Yy]$ ]]
+	if [[ "$response" =~ ^[Yy]$ ]]
 	then
 		rm "$dbfile"
 		echo "Old database deleted"
 	else
-		echo "Operation cancelled" 
+		echo "Operation cancelled"
 		exit
 	fi
 fi
 
 mkdir -p database/
 
-sqlite3 $dbfile < $sqlfile
+sqlite3 "$dbfile" < "$sqlfile"
 
 echo "Database created with the following tables:"
 sqlite3 database/db.sqlite3 ".tables"

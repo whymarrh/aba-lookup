@@ -13,5 +13,10 @@ set_include_path(implode(PATH_SEPARATOR, [
 
 require 'autoloader.php';
 
+function dd($data) {
+	var_dump($data);
+	die();
+}
+
 // Run the application!
 Zend\Mvc\Application::init(require 'config/application.config.php')->run();

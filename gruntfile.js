@@ -1,9 +1,6 @@
 module.exports = function (grunt) {
 	'use strict';
 
-	// Start with nothing
-	grunt.initConfig({});
-
 	// Set our directories
 	grunt.config('dir', {
 		'css': 'public/css',

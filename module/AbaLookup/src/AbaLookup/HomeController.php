@@ -12,7 +12,9 @@ class HomeController extends AbaLookupController
 	{
 		$this->layout('layout/home');
 		$id = Session::getId();
-		$this->user = $this->getService('Lookup\Api\UserAccount')->getById($id);
+		if (isset($id)) {
+			$this->user = $this->getService('Lookup\Api\UserAccount')->getById($id);
+		}
 		$this->prepareLayout($this->user);
 	}
 

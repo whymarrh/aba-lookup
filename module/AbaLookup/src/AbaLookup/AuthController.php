@@ -16,7 +16,7 @@ class AuthController extends AbaLookupController
 	public function action()
 	{
 		$id = Session::getId();
-		if ($id !== NULL) {
+		if (isset($id)) {
 			return $this->redirect()->toRoute('users', array('id' => $id, 'action' => 'profile'));
 		}
 		$this->prepareLayout();

@@ -29,7 +29,7 @@ class Session
 		$session = new Container(Session::USER_NAMESPACE);
 		$session->getManager()
 		        ->getConfig()
-		        ->setCookieHttpOnly(TRUE) // As per issue #87
+		        ->setCookieHttpOnly(TRUE)
 		        ->rememberMe(($remember === TRUE) ? Session::SECONDS_3_MONTHS : 0);
 		$session->offsetSet(Session::USER_KEY_ID, $id);
 	}

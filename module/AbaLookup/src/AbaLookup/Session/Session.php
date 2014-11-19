@@ -30,7 +30,7 @@ class Session
 		$session->getManager()
 		        ->getConfig()
 		        ->setCookieHttpOnly(TRUE) // As per issue #87
-		        ->rememberMe((is_bool($remember) && $remember) ? Session::SECONDS_3_MONTHS : 0);
+		        ->rememberMe(($remember === TRUE) ? Session::SECONDS_3_MONTHS : 0);
 		$session->offsetSet(Session::USER_KEY_ID, $id);
 	}
 

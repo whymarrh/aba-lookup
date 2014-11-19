@@ -13,16 +13,18 @@ class Module
 	public function onBootstrap(EventInterface $event)
 	{
 		$em = $event->getTarget()->getEventManager();
-		$em->attach(MvcEvent::EVENT_FINISH, [$this, 'minify']);
+		$em->attach(MvcEvent::EVENT_FINISH, array($this, 'contentSecurityPolicy'));
 	}
 
-	public function csp(MvcEvent $e)
+	public function contentSecurityPolicy(MvcEvent $e)
 	{
-		$response = $e->getResponse();
-		$response->getHeaders()
-		         ->addHeaderLine('Content-Security-Policy', 'default-src \'self\'');
+		$contentSecurityPolicy = new \Zend\Http\Header\ContentSecurityPolicy();
+		$contentSecurityPolicy->setDirective('default-src', array('\'self\''));
+		$e->getResponse()
+		  ->getHeaders()
+		  ->addHeader($contentSecurityPolicy);
 	}
-	
+
 	/**
 	 * Returns the module configuration
 	 */

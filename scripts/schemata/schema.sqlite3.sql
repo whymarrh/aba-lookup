@@ -4,7 +4,6 @@ PRAGMA foreign_keys = ON;
 -- User
 CREATE TABLE account(
 	id                     TEXT    PRIMARY KEY,
-	user_id                TEXT    UNIQUE      NOT NULL,
 	password               TEXT                NOT NULL,
 	password_reset_code    TEXT                NULL,
 	email                  TEXT    UNIQUE      NOT NULL,
@@ -12,22 +11,22 @@ CREATE TABLE account(
 	email_confirm_code     TEXT                NULL,
 	access_level           INTEGER             NOT NULL,
 	terms_of_service       INTEGER             NOT NULL,
-	creation_time          INTEGER             NOT NULL,
-	-- Associations
-	FOREIGN KEY(user_id)              REFERENCES user(id)              ON DELETE CASCADE ON UPDATE CASCADE
+	creation_time          INTEGER             NOT NULL
 );
 
 CREATE TABLE user(
 	id                     TEXT    PRIMARY KEY,
+	account_id             TEXT                NOT NULL,
 	user_display_name_id   INTEGER UNIQUE      NOT NULL,
 	user_type_id           INTEGER             NOT NULL,
 	location_id            INTEGER             NOT NULL,
-	gender                 TEXT,
-	phone_number           TEXT,
+	gender                 TEXT                NULL,
+	phone_number           TEXT                NULL,
 	aba_course             INTEGER,
-	certificate_of_conduct INTEGER,
+	certificate_of_conduct INTEGER             NULL,
 	creation_time          INTEGER             NOT NULL,
 	-- Associations
+	FOREIGN KEY(account_id)           REFERENCES account(id),
 	FOREIGN KEY(user_display_name_id) REFERENCES user_display_name(id) ON DELETE CASCADE,
 	FOREIGN KEY(user_type_id)         REFERENCES user_type(id),
 	FOREIGN KEY(location_id)          REFERENCES location(id)

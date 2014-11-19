@@ -2,6 +2,7 @@
 
 namespace AbaLookup;
 
+use Lookup\Entity\User;
 use Zend\EventManager\EventManagerInterface;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -69,54 +70,17 @@ abstract class AbaLookupController extends AbstractActionController implements S
 	}
 
 	/**
-	 * @return ViewModel Redirect to the home route.
-	 */
-	protected function redirectHome()
-	{
-		return $this->redirect()->toRoute('home');
-	}
-
-	/**
-	 * @return ViewModel Redirect to the login route.
-	 */
-	protected function redirectToLoginPage()
-	{
-		return $this->redirect()->toRoute('auth/login');
-	}
-
-	/**
-	 * Redirects to the users route given a user ID and an action
+	 * Prepares the layout to be displayed
 	 *
-	 * @param int $id The user ID.
-	 * @param string $action The route action.
-	 * @return ViewModel Redirect to the users route.
-	 */
-	protected function redirectToUsersRoute($id, $action = 'profile')
-	{
-		$params = ['id' => $id, 'action' => $action];
-		return $this->redirect()->toRoute('users', $params);
-	}
-
-	/**
-	 * Prepares the layout to be displayed for the given user
-	 *
-	 * Nests the footer widget into the layout, and attaches the current
-	 * user to the layout as a variable.
-	 *
-	 * @param Lookup\Entity\User $user The user in session.
+	 * @param Lookup\Entity\User $user
 	 * @return void
 	 */
-	protected function prepareLayout(Lookup\Entity\User $user = NULL)
+	protected function prepareLayout(User $user = NULL)
 	{
-		// Add the footer template
 		$layout = $this->layout();
 		$footer = new ViewModel();
 		$footer->setTemplate('widget/footer');
 		$layout->addChild($footer, 'footer');
-		if (is_null($user)) {
-			return;
-		}
-		// Attach the user to the view
 		$layout->setVariable('user', $user);
 	}
 }

@@ -9,16 +9,11 @@ use AbaLookup\Session\Session;
 class UsersController extends AbaLookupController
 {
 	/**
-	 * The ID of the user in session
-	 */
-	protected $uid;
-
-	/**
-	 * The user object for the user in session
+	 * The current user in session.
 	 *
 	 * @var Lookup\Entity\User
 	 */
-	protected $user;
+	private $user;
 
 	/**
 	 * Contains logic common to all actions and is run on each dispatch
@@ -27,97 +22,75 @@ class UsersController extends AbaLookupController
 	 */
 	public function action()
 	{
-		try {
-			$this->uid  = Session::getUserId();
-			$this->user = $this->getService('Lookp\Api\UserAccount')
-			                   ->get($uid);
-		} catch (\Lookup\Api\Exception\InvalidDataException $e) {
-			// The user ID is NOT valid
-			$this->redirectToLoginPage();
-			return;
+		$id = Session::getId();
+		$this->user = $this->getService('Lookup\Api\UserAccount')->getById($id);
+		if (isset($this->user)) {
+			return $this->redirect()->toRoute('auth/login');
 		}
-		// Prepare the layout
 		$this->prepareLayout($this->user);
 	}
 
 	/**
-	 * Displays the user's profile
-	 *
-	 * Edits to the user's profile arrive via POST.
+	 * Displays the user profile
 	 *
 	 * @return array|Zend\Http\Response
 	 */
 	public function profileAction()
 	{
 		$form = new ProfileEditForm($this->user);
-		// If the user has NOT submitted a POST request
+
 		if (!$this->request->isPost()) {
-			// Show the edit form
 			return [
 				'form' => $form,
 				'user' => $this->user,
 			];
 		}
-		// The user has submitted data via POST
-		$data = $this->params();
+
+		$data = $this->params()->fromPost();
 		try {
-			$this->getService('Lookup\Api\UserAccount')->post($this->uid, [
-				'aba_course'             => $data->fromPost($form::ELEMENT_NAME_ABA_COURSE),
-				'certificate_of_conduct' => $data->fromPost($form::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT_DATE),
-				'display_name'           => $data->fromPost($form::ELEMENT_NAME_DISPLAY_NAME),
-				'email'                  => $data->fromPost($form::ELEMENT_NAME_EMAIL_ADDRESS),
-				'gender'                 => $data->fromPost($form::ELEMENT_NAME_GENDER),
-				'phone_number'           => $data->fromPost($form::ELEMENT_NAME_PHONE_NUMBER),
-				'postal_code'            => $data->fromPost($form::ELEMENT_NAME_POSTAL_CODE),
-			]);
-		} catch (Lookup\Api\Exception\InvalidDataException $e) {
-			// Show the error message
+			$this->getService('Lookup\Api\UserAccount')->update($this->user, $data);
+		} catch (\Lookup\Api\Exception\InvalidArgumentException $e) {
 			return [
 				'error' => $e->getMessage(),
 				'form'  => $form,
 				'user'  => $this->user,
 			];
 		}
-		// Redirect to the profile page
-		return $this->redirectToUsersRoute($this->uid);
+
+		return $this->redirect()->toRoute('users', array('id' => $this->user->getId(), 'action' => 'profile'));
 	}
 
 	/**
-	 * Displays the user's schedule
-	 *
-	 * Edits to the schedule arrive via POST.
+	 * Displays the schedule
 	 *
 	 * @return array|Zend\Http\Response
 	 */
 	public function scheduleAction()
 	{
-		// Create the schedule edit form
+		$id = $this->user->getId();
 		$form = new ScheduleForm();
-		// Get the user's schedules
-		$schedules = $this->getService('Lookup\Api\Schedule')
-		                  ->get(['user_id' => $this->uid]);
+		$schedule = $this->getService('Lookup\Api\Schedule')->getById($id);
 		if ($this->request->isPost()) {
-			// Add the availability to the schedule
-			// $data = $this->params();
-			// TODO - Make a PUT request to ScheduleInterval API
-			// return $this->redirectToUsersRoute($this->uid, 'schedule');
+			$data = $this->param()->fromPost();
+			$this->getService('Lookup\Api\Schedule')->update($data);
+			return $this->redirect()->toRoute('users', array('id' => $id(), 'action' => 'schedule'));
+		} else {
+			$user = $this->user;
+			return [
+				'form' => $form,
+				'user' => $user,
+				'schedule' => $schedule,
+			];
 		}
-		// Show the user their schedule
-		return [
-			'form' => $form,
-			'user' => $this->user,
-			'schedules' => $schedules,
-		];
 	}
 
 	/**
-	 * Displays to the user their matches
+	 * Displays to the list of matches
 	 *
 	 * @return array|Zend\Http\Response
 	 */
 	public function matchesAction()
 	{
-		// Show the user their matches
 		return [
 			'user' => $this->user,
 		];

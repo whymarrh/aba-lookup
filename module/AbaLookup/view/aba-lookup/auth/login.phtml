@@ -12,7 +12,7 @@
 		<h2>Login to your account</h2>
 		<?php
 			if (isset($this->error)) {
-				echo "<p>{$this->error}</p>";
+				echo "<p>Invalid email address or password</p>";
 			}
 			$this->form->setAttribute('class', 'left');
 			$this->form->setAttribute('action', '/users/login');

@@ -2,10 +2,8 @@
 
 namespace AbaLookup;
 
-use
-	Zend\EventManager\EventInterface,
-	Zend\Mvc\MvcEvent
-;
+use Zend\EventManager\EventInterface;
+use Zend\Mvc\MvcEvent;
 
 /**
  * Module class

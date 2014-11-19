@@ -40,14 +40,6 @@ class Module
 		return include realpath(sprintf('%s/config/module.config.php', __DIR__));
 	}
 
-	/**
-	 * Returns the module service configuration
-	 */
-	public function getServiceConfig()
-	{
-		return include realpath(sprintf('%s/config/services.config.php', __DIR__));
-	}
-
 	public function getAutoloaderConfig()
 	{
 		return [

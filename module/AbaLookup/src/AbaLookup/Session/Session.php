@@ -24,7 +24,7 @@ class Session
 	 * @param bool $remember Whether to set an explicit TTL for the user session.
 	 * @return void
 	 */
-	public static function setUserId($id, $remember = FALSE)
+	public static function setId($id, $remember = FALSE)
 	{
 		$session = new Container(Session::USER_NAMESPACE);
 		$session->getManager()
@@ -37,7 +37,7 @@ class Session
 	/**
 	 * @return int|NULL The ID of the user in session.
 	 */
-	public static function getUserId()
+	public static function getId()
 	{
 		return (new Container(Session::USER_NAMESPACE))->offsetGet(Session::USER_KEY_ID);
 	}
@@ -47,7 +47,7 @@ class Session
 	 *
 	 * @return void
 	 */
-	public static function unsetUserId()
+	public static function unsetId()
 	{
 		(new Container(Session::USER_NAMESPACE))->offsetUnset(Session::USER_KEY_ID);
 	}

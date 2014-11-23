@@ -6,6 +6,8 @@ class Schedule
 {
 	use Id;
 
+	const TABLE_NAME = 'schedule';
+
 	/**
 	 * The name of the schedule
 	 *

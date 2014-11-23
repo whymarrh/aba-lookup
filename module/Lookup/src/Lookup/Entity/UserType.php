@@ -6,6 +6,8 @@ class UserType
 {
 	use Id;
 
+	const TABLE_NAME = 'user_type';
+
 	/**
 	 * The name of the type.
 	 *
@@ -14,9 +16,7 @@ class UserType
 	private $name;
 
 	/**
-	 * Constructor
-	 *
-	 * @param string|NULL $name The name of the type.
+	 * @param string $name The name of the user type
 	 * @throws Exception\InvalidArgumentException
 	 */
 	public function __construct($name)

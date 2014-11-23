@@ -6,6 +6,8 @@ class ScheduleInterval
 {
 	use Id;
 
+	const TABLE_NAME = 'schedule_interval';
+
 	/**
 	 * The start time for this interval
 	 *

@@ -6,6 +6,8 @@ class LocationDistance
 {
 	use Id;
 
+	const TABLE_NAME = 'location_distance';
+
 	/**
 	 * Location A
 	 *

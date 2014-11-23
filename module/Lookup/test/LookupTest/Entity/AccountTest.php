@@ -3,23 +3,15 @@
 namespace LookupTest\Entity;
 
 use Lookup\Entity\Account;
-use Mockery;
 use PHPUnit_Framework_TestCase;
 
 class AccountTest extends PHPUnit_Framework_TestCase
 {
-	protected $user;
 	protected $account;
 
 	protected function setUp()
 	{
-		$this->user = Mockery::mock('Lookup\Entity\User');
-		$this->account = new Account($this->user, 'passw0rd', NULL, 'foo@bar.com', TRUE, NULL, 3, 4, 5);
-	}
-
-	protected function tearDown()
-	{
-		Mockery::close();
+		$this->account = new Account('passw0rd', NULL, 'foo@bar.com', TRUE, NULL, 3, 4, 5);
 	}
 
 	public function testSetGetId()
@@ -27,11 +19,6 @@ class AccountTest extends PHPUnit_Framework_TestCase
 		$id = 'foo-bar-baz';
 		$this->account->setId($id);
 		$this->assertEquals($id, $this->account->getId());
-	}
-
-	public function testGetUser()
-	{
-		$this->assertEquals($this->user, $this->account->getUser());
 	}
 
 	public function testGetPassword()

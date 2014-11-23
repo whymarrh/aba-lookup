@@ -6,12 +6,7 @@ class Account
 {
 	use Uuid;
 
-	/**
-	 * The user for the account
-	 *
-	 * @var User
-	 */
-	private $user;
+	const TABLE_NAME = 'account';
 
 	/**
 	 * The account password
@@ -72,7 +67,6 @@ class Account
 	/**
 	 * Constructor
 	 *
-	 * @param User $user The user for the account.
 	 * @param string $password The password for the account.
 	 * @param string|NULL $passwordResetCode The password reset code.
 	 * @param string $email The account email address.
@@ -83,9 +77,8 @@ class Account
 	 * @param int $creationTime The time at which the account was created.
 	 * @throws Exception\InvalidArgumentException
 	 */
-	public function __construct(User $user, $password, $passwordResetCode, $email, $emailConfirmed, $emailConfirmCode, $accessLevel, $termsOfService, $creationTime)
+	public function __construct($password, $passwordResetCode, $email, $emailConfirmed, $emailConfirmCode, $accessLevel, $termsOfService, $creationTime)
 	{
-		$this->setUser($user);
 		$this->setPassword($password);
 		$this->setPasswordResetCode($passwordResetCode);
 		$this->setEmail($email);
@@ -94,16 +87,6 @@ class Account
 		$this->setAccessLevel($accessLevel);
 		$this->setTermsOfService($termsOfService);
 		$this->setCreationTime($creationTime);;
-	}
-
-	/**
-	 * @param User $user The user for the account.
-	 * @return self
-	 */
-	public final function setUser(User $user)
-	{
-		$this->user = $user;
-		return $this;
 	}
 
 	/**
@@ -240,14 +223,6 @@ class Account
 		}
 		$this->creationTime = $creationTime;
 		return $this;
-	}
-
-	/**
-	 * @return User The user for the account.
-	 */
-	public function getUser()
-	{
-		return $this->user;
 	}
 
 	/**

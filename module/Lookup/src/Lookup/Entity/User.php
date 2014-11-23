@@ -6,6 +6,15 @@ class User
 {
 	use Uuid;
 
+	const TABLE_NAME = 'user';
+
+	/**
+	 * The account for this user
+	 *
+	 * @var Account
+	 */
+	private $account;
+
 	/**
 	 * The display name for user
 	 *
@@ -44,7 +53,7 @@ class User
 	/**
 	 * Whether the user has completed their course
 	 *
-	 * @var bool|NULL
+	 * @var bool
 	 */
 	private $abaCourse;
 
@@ -65,18 +74,20 @@ class User
 	/**
 	 * Constructor
 	 *
+	 * @param Account $account The account for this user.
 	 * @param UserDisplayName $displayName The display name for the user.
 	 * @param UserType $userType The type of the user.
 	 * @param Location $location The location of the user.
 	 * @param string|NULL $gender The gender of the user.
 	 * @param string|NULL $phoneNumber The phone number for the user.
-	 * @param bool|NULL $abaCourse Whether the user has completed the ABA training course.
+	 * @param bool $abaCourse Whether the user has completed the ABA training course.
 	 * @param int|NULL $certificateOfConduct The date on which the user last recieved their Certificate of Conduct.
 	 * @param int $creationTime The time at which the user was created.
 	 * @throws Exception\InvalidArgumentException
 	 */
-	public function __construct(UserDisplayName $displayName, UserType $userType, Location $location, $gender, $phoneNumber, $abaCourse, $certificateOfConduct, $creationTime)
+	public function __construct(Account $account, UserDisplayName $displayName, UserType $userType, Location $location, $gender, $phoneNumber, $abaCourse, $certificateOfConduct, $creationTime)
 	{
+		$this->setAccount($account);
 		$this->setDisplayName($displayName);
 		$this->setUserType($userType);
 		$this->setLocation($location);
@@ -85,6 +96,16 @@ class User
 		$this->setAbaCourse($abaCourse);
 		$this->setCertificateOfConduct($certificateOfConduct);
 		$this->setCreationTime($creationTime);
+	}
+
+	/**
+	 * @param Account $account The account for the user.
+	 * @return self
+	 */
+	public final function setAccount(Account $account)
+	{
+		$this->account = $account;
+		return $this;
 	}
 
 	/**
@@ -152,15 +173,15 @@ class User
 	}
 
 	/**
-	 * @param bool|NULL $abaCourse Whether the user has the course completed.
+	 * @param bool $abaCourse Whether the user has the course completed.
 	 * @throws Exception\InvalidArgumentException If the argument type does not fit.
 	 * @return self
 	 */
 	public final function setAbaCourse($abaCourse)
 	{
-		if (!is_bool($abaCourse) && !is_null($abaCourse)) {
+		if (!is_bool($abaCourse)) {
 			throw new Exception\InvalidArgumentException(sprintf(
-				'%s expects a bool or NULL value.',
+				'%s expects a bool value.',
 				__METHOD__
 			));
 		}
@@ -200,6 +221,14 @@ class User
 		}
 		$this->creationTime = $creationTime;
 		return $this;
+	}
+
+	/**
+	 * @return Account The account for this user.
+	 */
+	public function getAccount()
+	{
+		return $this->account;
 	}
 
 	/**

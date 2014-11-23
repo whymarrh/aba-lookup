@@ -6,6 +6,8 @@ class UserDisplayName
 {
 	use Id;
 
+	const TABLE_NAME = 'user_display_name';
+
 	/**
 	 * The user to whom the display name belongs
 	 *

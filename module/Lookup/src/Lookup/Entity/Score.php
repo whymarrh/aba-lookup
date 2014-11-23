@@ -6,6 +6,8 @@ class Score
 {
 	use Id;
 
+	const TABLE_NAME = 'score';
+
 	/**
 	 * User A of the pair
 	 *

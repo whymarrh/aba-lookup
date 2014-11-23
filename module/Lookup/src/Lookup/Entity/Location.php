@@ -6,6 +6,8 @@ class Location
 {
 	use Id;
 
+	const TABLE_NAME = 'location';
+
 	/**
 	 * The city name
 	 *

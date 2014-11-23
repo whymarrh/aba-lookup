@@ -13,6 +13,7 @@ abstract class AbstractBaseForm extends Form
 	const ELEMENT_NAME_ADD_REMOVE_AVAILABILITY      = 'add-remove-availability';
 	const ELEMENT_NAME_CERTIFICATE_OF_CONDUCT       = 'certificate-of-conduct';
 	const ELEMENT_NAME_CERTIFICATE_OF_CONDUCT_DATE  = 'certificate-of-conduct-date';
+	const ELEMENT_NAME_CITY                         = 'city';
 	const ELEMENT_NAME_CONFIRM_PASSWORD             = 'confirm-password';
 	const ELEMENT_NAME_DISPLAY_NAME                 = 'display-name';
 	const ELEMENT_NAME_EMAIL_ADDRESS                = 'email-address';

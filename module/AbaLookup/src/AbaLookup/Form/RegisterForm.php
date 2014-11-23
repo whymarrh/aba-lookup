@@ -131,6 +131,17 @@ class RegisterForm extends AbstractBaseForm
 				],
 			]);
 		}
+		// City
+		$this->add([
+			'name' => self::ELEMENT_NAME_CITY,
+			'type' => 'text',
+			'attributes' => [
+				'id' => self::ELEMENT_NAME_CITY,
+			],
+			'options' => [
+				'label' => 'City (optional)',
+			],
+		]);
 		// Postal code
 		$this->add([
 			'name' => self::ELEMENT_NAME_POSTAL_CODE,

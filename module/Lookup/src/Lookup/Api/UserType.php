@@ -2,7 +2,7 @@
 
 namespace Lookup\Api;
 
-class Schedule
+class UserType
 {
 	public function create(array $data)
 	{

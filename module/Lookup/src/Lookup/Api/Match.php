@@ -2,7 +2,7 @@
 
 namespace Lookup\Api;
 
-class Schedule
+class Match
 {
 	public function create(array $data)
 	{

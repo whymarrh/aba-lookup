@@ -8,6 +8,7 @@ module.exports = function (grunt) {
 	grunt.config('dir', {
 		'css': 'public/css',
 		'js': 'public/js',
+		'modules': 'module',
 		'sass': 'public/sass'
 	});
 
@@ -116,6 +117,9 @@ module.exports = function (grunt) {
 		},
 		'composer': {
 			'command': 'composer install'
+		},
+		'phpunit': {
+			'command': 'scripts/test-phpunit'
 		}
 	});
 
@@ -125,6 +129,10 @@ module.exports = function (grunt) {
 		'scripts': {
 			'files': '<%= dir.sass %>/**/*.scss',
 			'tasks': ['sass']
+		},
+		'phpunit': {
+			'files': '<%= dir.modules %>/**/*.php',
+			'tasks': ['shell:phpunit']
 		}
 	});
 

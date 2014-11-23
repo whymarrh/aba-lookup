@@ -25,6 +25,7 @@ fi
 mkdir -p database/
 
 sqlite3 "$dbfile" < "$sqlfile"
+chmod 766 "$dbfile"
 
 echo "Database created with the following tables:"
 sqlite3 database/db.sqlite3 ".tables"

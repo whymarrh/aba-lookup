@@ -35,7 +35,7 @@ CREATE TABLE user(
 CREATE TABLE user_display_name(
 	id                     INTEGER PRIMARY KEY,
 	user_id                TEXT                NULL,
-	display_name           TEXT                NOT NULL,
+	display_name           TEXT    UNIQUE      NOT NULL,
 	creation_time          INTEGER             NOT NULL,
 	-- Associations
 	FOREIGN KEY(user_id)              REFERENCES user(id)              ON DELETE CASCADE
@@ -89,6 +89,7 @@ CREATE TABLE location(
 	id                     INTEGER PRIMARY KEY,
 	city                   TEXT                NOT NULL,
 	postal_code            TEXT                NOT NULL,
+	-- Constraints
 	CONSTRAINT city_postal_code_unique UNIQUE (city, postal_code)
 );
 

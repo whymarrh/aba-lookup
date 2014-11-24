@@ -4,7 +4,6 @@ namespace Lookup\Db;
 
 use Lookup\Entity\UserDisplayName as UserDisplayNameEntity;
 use Zend\Db\Sql\Sql;
-use Zend\Db\Sql\Sql\Predicate;
 
 class UserDisplayName
 {

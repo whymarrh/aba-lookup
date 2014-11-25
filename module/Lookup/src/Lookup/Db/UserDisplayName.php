@@ -54,4 +54,27 @@ class UserDisplayName
 		$newUserDisplayName->setId((int) $lastInsertRowId);
 		return $newUserDisplayName;
 	}
+
+	/**
+	 * @param string $id The user ID.
+	 * @return \Lookup\Entity\UserDisplayName|NULL The display name for the user with the given ID.
+	 */
+	public function getByUserId($id)
+	{
+		$select = $this->sql->select();
+		$select->from(UserDisplayNameEntity::TABLE_NAME)->where(array(
+			'user_id' => $id,
+		));
+		$statement = $this->sql->prepareStatementForSqlObject($select);
+		$results = $statement->execute();
+
+		if ($results->count() == 0) {
+			return NULL;
+		}
+
+		$row = $results->current();
+		$userDisplayName = new UserDisplayNameEntity(NULL, $row['display_name'], (int) $row['creation_time']);
+		$userDisplayName->setId((int) $row['id']);
+		return $userDisplayName;
+	}
 }

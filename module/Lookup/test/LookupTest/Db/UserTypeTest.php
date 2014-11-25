@@ -26,6 +26,20 @@ class UserTypeTest extends BaseTestCase
 		$this->userTypeDb = new UserTypeDb($sql);
 	}
 
+	public function testGetByIdReturnsNullWhenPassedNonexistentId()
+	{
+		$result = $this->userTypeDb->getById(12);
+		$this->assertNull($result);
+	}
+
+	public function testGetByIdReturnsUserType()
+	{
+		$result = $this->userTypeDb->getById(1);
+		$this->assertInstanceOf('Lookup\Entity\UserType', $result);
+		$this->assertEquals($result->getId(), 1);
+		$this->assertEquals($result->getName(), 'bar');
+	}
+
 	public function testGetNonexistentUserTypeReturnsNull()
 	{
 		$userType = new UserType('foo');

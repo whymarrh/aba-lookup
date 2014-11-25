@@ -21,6 +21,29 @@ class Location
 		$this->sql = $sql;
 	}
 
+	/**
+	 * @param int $id A location ID.
+	 * @return \Lookup\Entity\Location|NULL The location for the Id.
+	 */
+	public function getById($id)
+	{
+		$select = $this->sql->select();
+		$select->from(LocationEntity::TABLE_NAME)->where(array(
+			'id' => $id,
+		));
+		$statement = $this->sql->prepareStatementForSqlObject($select);
+		$results = $statement->execute();
+
+		if ($results->count() == 0) {
+			return NULL;
+		}
+
+		$row = $results->current();
+		$location = new LocationEntity($row['city'], $row['postal_code']);
+		$location->setId((int) $row['id']);
+		return $location;
+	}
+
 	public function get(LocationEntity $location)
 	{
 		$select = $this->sql->select();

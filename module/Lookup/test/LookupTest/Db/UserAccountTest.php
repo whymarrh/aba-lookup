@@ -61,6 +61,20 @@ class UserAccountTest extends BaseTestCase
 		$this->assertNotSame($user, $result);
 	}
 
+	public function testGetAccountByEmailReturnsNullWhenNonexistentIdPassed()
+	{
+		$account = $this->userAccountDb->getAccountByEmail('this.does.not@exi.st');
+		$this->assertNull($account);
+	}
+
+	public function testGetAccountByEmailReturnsAccount()
+	{
+		$account = $this->userAccountDb->getAccountByEmail('email@add.ress');
+		$this->assertInstanceOf('Lookup\Entity\Account', $account);
+		$this->assertNotNull($account->getId());
+		$this->assertEquals('x-y-z', $account->getId());
+	}
+
 	public function testGetAccountIdForUserIdReturnsNullWhenNonexistentIdPassed()
 	{
 		$accountId = $this->userAccountDb->getAccountIdForUserId('a-a-a');
@@ -123,6 +137,20 @@ class UserAccountTest extends BaseTestCase
 		$this->assertNotNull($locationId);
 		$this->assertInternalType('int', $locationId);
 		$this->assertEquals($locationId, 4);
+	}
+
+	public function testGetUserIdForAccountIdReturnsNullWhenNonexistentAccountIdPassed()
+	{
+		$userId = $this->userAccountDb->getUserIdForAccountId('a-a-a');
+		$this->assertNull($userId);
+	}
+
+	public function testGetUserIdForAccountIdReturnsUserId()
+	{
+		$userId = $this->userAccountDb->getUserIdForAccountId('x-y-z');
+		$this->assertNotNull($userId);
+		$this->assertInternalType('string', $userId);
+		$this->assertEquals('b-b-b', $userId);
 	}
 
 	public function testGetUserReturnsNullWhenPassedNonexistentId()

@@ -104,28 +104,62 @@ class UserAccount
 		$userDisplayName->setUser($user);
 		$this->userDisplayNameDb->update($userDisplayName);
 
-		dd($user);
+		return $user;
+	}
+
+	/**
+	 * @param mixed|NULL $id The user ID.
+	 * @return \Lookup\Entity\User|NULL
+	 */
+	public function getById($id)
+	{
+		if ($id == NULL) {
+			return NULL;
+		}
+
+		$userDisplayName = $this->userDisplayNameDb->getByUserId($id);
+
+		$locationId = $this->userAccountDb->getLocationIdForUserId($id);
+		$location = $this->locationDb->getById($locationId);
+
+		$userTypeId = $this->userAccountDb->getUserTypeIdForUserId($id);
+		$userType = $this->userTypeDb->getById($userTypeId);
+
+		$accountId = $this->userAccountDb->getAccountIdForUserId($id);
+		$account = $this->userAccountDb->getAccountById($accountId);
+
+		$user = $this->userAccountDb->getUser($id, $account, $userDisplayName, $userType, $location);
 
 		return $user;
 	}
 
 	/**
-	 * @param string $id
-	 * @return \Lookup\Entity\User|NULL
+	 * @param array $data
+	 * @return \Lookup\Entity\Account|NULL
 	 */
-	public function getById($id)
+	public function getAccountForCredentials(array $data)
 	{
-		dd($id);
-		return NULL;
+		return $this->userAccountDb->getAccountByEmail($data['email-address']);
 	}
 
 	/**
-	 * @param array $data
+	 * @param \Lookup\Entity\Account $account
 	 * @return \Lookup\Entity\User|NULL
 	 */
-	public function getByCredentials(array $data)
+	public function getUserForAccount(Account $account)
 	{
-		dd($data);
-		return NULL;
+		$userId = $this->userAccountDb->getUserIdForAccountId($account->getId());
+
+		$userDisplayName = $this->userDisplayNameDb->getByUserId($userId);
+
+		$locationId = $this->userAccountDb->getLocationIdForUserId($userId);
+		$location = $this->locationDb->getById($locationId);
+
+		$userTypeId = $this->userAccountDb->getUserTypeIdForUserId($userId);
+		$userType = $this->userTypeDb->getById($userTypeId);
+
+		$user = $this->userAccountDb->getUser($userId, $account, $userDisplayName, $userType, $location);
+
+		return $user;
 	}
 }

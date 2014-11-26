@@ -75,6 +75,38 @@ class UserAccount
 	}
 
 	/**
+	 * @param string $email The account email address.
+	 * @return \Lookup\Entity\Account|NULL The account for the given email address.
+	 */
+	public function getAccountByEmail($email)
+	{
+		$select = $this->sql->select();
+		$select->from(AccountEntity::TABLE_NAME)->where(array(
+			'email' => $email,
+		));
+		$statement = $this->sql->prepareStatementForSqlObject($select);
+		$results = $statement->execute();
+
+		if ($results->count() == 0) {
+			return NULL;
+		}
+
+		$row = $results->current();
+		$account = new AccountEntity(
+			$row['password'],
+			$row['password_reset_code'],
+			$row['email'],
+			(bool) $row['email_confirmed'],
+			$row['email_confirm_code'],
+			(int) $row['access_level'],
+			(int) $row['terms_of_service'],
+			(int) $row['creation_time']
+		);
+		$account->setId($row['id']);
+		return $account;
+	}
+
+	/**
 	 * @param string $id The user ID.
 	 * @return string|NULL The account ID for the given user ID.
 	 */
@@ -167,6 +199,23 @@ class UserAccount
 
 		$row = $results->current();
 		return (int) $row['location_id'];
+	}
+
+	public function getUserIdForAccountId($id)
+	{
+		$select = $this->sql->select();
+		$select->from(UserEntity::TABLE_NAME)->where(array(
+			'account_id' => $id,
+		));
+		$statement = $this->sql->prepareStatementForSqlObject($select);
+		$results = $statement->execute();
+
+		if ($results->count() == 0) {
+			return NULL;
+		}
+
+		$row = $results->current();
+		return $row['id'];
 	}
 
 	/**

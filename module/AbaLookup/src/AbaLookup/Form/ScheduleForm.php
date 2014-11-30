@@ -2,7 +2,7 @@
 
 namespace AbaLookup\Form;
 
-class LoginForm extends AbstractBaseForm
+class ScheduleForm extends AbstractBaseForm
 {
 	public function __construct()
 	{
@@ -25,7 +25,7 @@ class LoginForm extends AbstractBaseForm
 			],
 			'attributes' => [
 				'value' => '1',
-			];
+			]
 		]);
 		// TODO - Add inputs for times (issue #84)
 		// Add/remove availability
@@ -41,7 +41,7 @@ class LoginForm extends AbstractBaseForm
 			],
 			'attributes' => [
 				'value' => '0',
-			];
+			]
 		]);
 		// Submit
 		$this->add([

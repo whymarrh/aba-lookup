@@ -16,7 +16,8 @@ class AnchorLink extends AbstractHelper
 	public function __invoke($text, $href, array $class = NULL)
 	{
 		if (
-			   empty($href, $text)
+			   empty($href)
+			|| empty($text)
 			|| !is_string($text)
 			|| !is_string($href)
 		) {

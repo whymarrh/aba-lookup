@@ -20,7 +20,7 @@ class Session
 	/**
 	 * Sets the user ID for the session
 	 *
-	 * @param int $id The user ID.
+	 * @param string $id The user ID.
 	 * @param bool $remember Whether to set an explicit TTL for the user session.
 	 * @return void
 	 */
@@ -30,12 +30,12 @@ class Session
 		$session->getManager()
 		        ->getConfig()
 		        ->setCookieHttpOnly(TRUE)
-		        ->rememberMe(($remember === TRUE) ? Session::SECONDS_3_MONTHS : 0);
+		        ->setRememberMeSeconds(($remember === TRUE) ? Session::SECONDS_3_MONTHS : 1);
 		$session->offsetSet(Session::USER_KEY_ID, $id);
 	}
 
 	/**
-	 * @return int|NULL The ID of the user in session.
+	 * @return string|NULL The ID of the user in session.
 	 */
 	public static function getId()
 	{

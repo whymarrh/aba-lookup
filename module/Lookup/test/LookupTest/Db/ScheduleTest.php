@@ -4,6 +4,7 @@ namespace LookupTest\Db;
 
 use Lookup\Db\Schedule as ScheduleDb;
 use Lookup\Entity\Schedule;
+use Mockery;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\Sql\Sql;
 
@@ -33,6 +34,22 @@ class ScheduleTest extends BaseTestCase
 
 		$sql = new Sql($adapter);
 		$this->scheduleDb = new ScheduleDb($sql);
+	}
+
+	public function testCreateSchedule()
+	{
+		$schedule = $this->scheduleDb->createSchedule();
+		$this->assertInstanceOf('Lookup\Entity\Schedule', $schedule);
+		$this->assertNotNull($schedule->getId());
+		$this->assertNotNull($schedule->getName());
+		$this->assertTrue($schedule->isEnabled());
+	}
+
+	public function testAssignScheduleToUser()
+	{
+		$user = Mockery::mock('Lookup\Entity\User')->shouldReceive('getId')->andReturn('a-bcde-f')->mock();
+		$schedule = Mockery::mock('Lookup\Entity\Schedule')->shouldReceive('getId')->andReturn(90)->mock();
+		$this->scheduleDb->assign($user, $schedule);
 	}
 
 	public function testGetByUserIdReturnsNullWhenNonexistentIdPassed()

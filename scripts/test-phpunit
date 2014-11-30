@@ -1,7 +1,27 @@
 #!/usr/bin/env bash
 
-MODULE=${MODULE:-ABALookup}
-DIR="module/$MODULE/test/"
+set -e
 
-cd $DIR
-../../../vendor/bin/phpunit --verbose || exit 1
+function phpunit()
+{
+	cwd="$(pwd)"
+	cd "$1"
+	../../../vendor/bin/phpunit --verbose
+	cd "$cwd"
+}
+
+if [[ -n "$MODULE" ]]
+then
+	dir="module/$MODULE/test"
+	if [[ ! -d "$dir" ]]
+	then
+		echo "Test directory does not exist for $dir"
+		exit 1
+	fi
+	phpunit "$dir"
+else
+	for dir in module/*/test
+	do
+		phpunit "$dir"
+	done
+fi

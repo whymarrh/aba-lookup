@@ -14,7 +14,7 @@ set_include_path(implode(PATH_SEPARATOR, [
 require 'autoloader.php';
 
 function dd($data) {
-	var_dump($data);
+	call_user_func_array('var_dump', func_get_args());
 	die();
 }
 

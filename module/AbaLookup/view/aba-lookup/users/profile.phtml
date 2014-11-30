@@ -1,5 +1,5 @@
 <?php
-	$this->headTitle('Profile - ' . $this->user->getDisplayName());
+	$this->headTitle('Profile - ' . $this->user->getDisplayName()->getDisplayName());
 ?>
 <div class="eight columns">
 	<h2>Edit your profile information</h2>
@@ -8,7 +8,7 @@
 			echo "<p>{$this->error}</p>";
 		}
 		$this->form->setAttribute('class', 'left');
-		$this->form->setAttribute('action', '/users' . '/' . $this->user->getId() . '/profile/edit');
+		$this->form->setAttribute('action', '/users' . '/' . $this->user->getId() . '/profile');
 		$this->form->setAttribute('method', 'post');
 		echo $this->form()->markup($this->form);
 	?>

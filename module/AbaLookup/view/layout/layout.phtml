@@ -27,7 +27,7 @@
 							foreach ($pages as $page) {
 								echo sprintf(
 									'<li>%s</li>',
-									$this->anchor($page, sprintf('/users/%d/%s', $id, strtolower($page)))
+									$this->anchor($page, sprintf('/users/%s/%s', $id, strtolower($page)))
 								);
 							}
 						?>

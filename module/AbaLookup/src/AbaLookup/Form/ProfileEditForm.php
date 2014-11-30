@@ -2,21 +2,30 @@
 
 namespace AbaLookup\Form;
 
+use Lookup\Entity\Account;
+use Lookup\Entity\User;
+
 class ProfileEditForm extends AbstractBaseForm
 {
 	/**
-	 * @param Lookup\Entity\User $user The user whose profile is being edited.
+	 * @param \Lookup\Entity\User $user
 	 */
-	public function __construct(Lookup\Entity\User $user)
+	public function __construct(User $user)
 	{
 		parent::__construct();
+
+		$account = $user->getAccount();
+		$location = $user->getLocation();
+		$userDisplayName = $user->getDisplayName();
+		$userType = $user->getUserType();
+
 		// Display name
 		$this->add([
 			'name' => self::ELEMENT_NAME_DISPLAY_NAME,
 			'type' => 'text',
 			'attributes' => [
 				'id'    => self::ELEMENT_NAME_DISPLAY_NAME,
-				'value' => $user->getDisplayName(),
+				'value' => $userDisplayName->getDisplayName(),
 			],
 			'options' => [
 				'label' => 'Your display name'
@@ -28,7 +37,7 @@ class ProfileEditForm extends AbstractBaseForm
 			'type' => 'email',
 			'attributes' => [
 				'id'    => self::ELEMENT_NAME_EMAIL_ADDRESS,
-				'value' => $user->getEmail(),
+				'value' => $account->getEmail(),
 			],
 			'options' => [
 				'label' => 'Your email address'
@@ -41,7 +50,7 @@ class ProfileEditForm extends AbstractBaseForm
 			'attributes' => [
 				'id'    => self::ELEMENT_NAME_PHONE_NUMBER,
 				'type'  => 'tel',
-				'value' => $user->getPhone(),
+				'value' => $user->getPhoneNumber(),
 			],
 			'options' => [
 				'label' => 'Your phone number (optional)'
@@ -53,7 +62,7 @@ class ProfileEditForm extends AbstractBaseForm
 			'type' => 'text',
 			'attributes' => [
 				'id'    => self::ELEMENT_NAME_POSTAL_CODE,
-				'value' => $user->getPostalCode(),
+				'value' => $location->getPostalCode(),
 			],
 			'options' => [
 				'label' => 'Postal code (optional)',
@@ -64,18 +73,19 @@ class ProfileEditForm extends AbstractBaseForm
 			'name' => self::ELEMENT_NAME_USER_TYPE,
 			'attributes' => [
 				'type'  => 'hidden',
-				'value' => $user->getUserType(),
+				'value' => $userType->getName(),
 			],
 		]);
+
 		// Show therapist-only fields?
-		if ($user->getUserType() === self::USER_TYPE_ABA_THERAPIST) {
+		if ($userType->getName() === self::USER_TYPE_ABA_THERAPIST) {
 			// ABA training course
 			$this->add([
 				'name' => self::ELEMENT_NAME_ABA_COURSE,
 				'type' => 'checkbox',
 				'attributes' => [
 					'id'      => self::ELEMENT_NAME_ABA_COURSE,
-					'checked' => $user->getAbaCourse(),
+					'checked' => $user->isAbaCourse(),
 				],
 				'options' => [
 					'label'         => 'Completed ABA training course',
@@ -113,6 +123,7 @@ class ProfileEditForm extends AbstractBaseForm
 			}
 			$this->add($dateFormElement);
 		}
+
 		// Submit btn
 		$this->add([
 			'type' => 'submit',

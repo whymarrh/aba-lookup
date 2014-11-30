@@ -3,6 +3,7 @@
 namespace AbaLookup\View\Helper;
 
 use DateTime;
+use Lookup\Entity\Schedule;
 use Zend\View\Helper\AbstractHelper;
 
 class ScheduleHelper extends AbstractHelper
@@ -17,7 +18,7 @@ class ScheduleHelper extends AbstractHelper
 	/**
 	 * The schedule object to render
 	 *
-	 * @var Lookup\Entity\Schedule
+	 * @var \Lookup\Entity\Schedule
 	 */
 	protected $schedule;
 
@@ -26,7 +27,7 @@ class ScheduleHelper extends AbstractHelper
 	 *
 	 * @return $this
 	 */
-	public function __invoke(Lookup\Entity\Schedule $schedule)
+	public function __invoke(Schedule $schedule)
 	{
 		$this->schedule = $schedule;
 		$this->days = $schedule->getDays();

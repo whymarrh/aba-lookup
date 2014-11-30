@@ -24,8 +24,8 @@
 								echo sprintf(
 									'<li>%s</li>',
 									$this->anchor(
-										$this->user->getDisplayName(),
-										sprintf('/users/%d/profile', $this->user->getId()),
+										$this->user->getDisplayName()->getDisplayName(),
+										sprintf('/users/%s/profile', $this->user->getId()),
 										['button', 'mobile-ten']
 									)
 								);

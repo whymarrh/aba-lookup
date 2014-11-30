@@ -30,4 +30,11 @@ class ScheduleTest extends PHPUnit_Framework_TestCase
 	{
 		$this->assertFalse($this->schedule->isEnabled());
 	}
+
+	public function testSetGetIntervals()
+	{
+		$intervals = array(1, 2, 3);
+		$this->schedule->setIntervals($intervals);
+		$this->assertSame($this->schedule->getIntervals(), $intervals);
+	}
 }

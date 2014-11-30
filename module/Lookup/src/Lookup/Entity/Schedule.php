@@ -23,6 +23,13 @@ class Schedule
 	private $enabled;
 
 	/**
+	 * The array of available intervals for this schedule.
+	 *
+	 * @var \Lookup\Entity\ScheduleInterval[]
+	 */
+	private $intervals;
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $name The name for the schedule.
@@ -70,6 +77,16 @@ class Schedule
 	}
 
 	/**
+	 * @param \Lookup\Entity\ScheduleInterval[] $intervals
+	 * @return self
+	 */
+	public final function setIntervals(array $intervals)
+	{
+		$this->intervals = $intervals;
+		return $this;
+	}
+
+	/**
 	 * @return string The name for this schedule.
 	 */
 	public function getName()
@@ -83,5 +100,13 @@ class Schedule
 	public function isEnabled()
 	{
 		return $this->enabled;
+	}
+
+	/**
+	 * @return \Lookup\Entity\ScheduleInterval[]
+	 */
+	public function getIntervals()
+	{
+		return $this->intervals;
 	}
 }

@@ -24,7 +24,7 @@ class UsersController extends AbaLookupController
 	{
 		$id = Session::getId();
 		$this->user = $this->getService('Lookup\Api\UserAccount')->getById($id);
-		if (isset($this->user)) {
+		if ($this->user == NULL) {
 			return $this->redirect()->toRoute('auth/login');
 		}
 		$this->prepareLayout($this->user);
@@ -57,7 +57,10 @@ class UsersController extends AbaLookupController
 			];
 		}
 
-		return $this->redirect()->toRoute('users', array('id' => $this->user->getId(), 'action' => 'profile'));
+		return $this->redirect()->toRoute('users', array(
+			'id' => $this->user->getId(),
+			'action' => 'profile',
+		));
 	}
 
 	/**
@@ -69,12 +72,15 @@ class UsersController extends AbaLookupController
 	{
 		$id = $this->user->getId();
 		$form = new ScheduleForm();
-		$schedule = $this->getService('Lookup\Api\Schedule')->getById($id);
 		if ($this->request->isPost()) {
 			$data = $this->param()->fromPost();
-			$this->getService('Lookup\Api\Schedule')->update($data);
-			return $this->redirect()->toRoute('users', array('id' => $id(), 'action' => 'schedule'));
+			$this->getService('Lookup\Api\Schedule')->update($id, $data);
+			return $this->redirect()->toRoute('users', array(
+				'id' => $id,
+				'action' => 'schedule',
+			));
 		} else {
+			$schedule = $this->getService('Lookup\Api\Schedule')->getByUserId($id);
 			$user = $this->user;
 			return [
 				'form' => $form,

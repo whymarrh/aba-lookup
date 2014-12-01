@@ -15,10 +15,6 @@ class AuthController extends AbaLookupController
 	 */
 	public function action()
 	{
-		$id = Session::getId();
-		if (isset($id)) {
-			return $this->redirect()->toRoute('users', array('id' => $id, 'action' => 'profile'));
-		}
 		$this->prepareLayout();
 	}
 
@@ -41,7 +37,8 @@ class AuthController extends AbaLookupController
 
 		$data = $this->params()->fromPost();
 		try {
-			$id = $this->getService('Lookup\Api\UserAccount')->create($data);
+			$user = $this->getService('Lookup\Api\UserAccount')->create($data);
+			$this->getService('Lookup\Api\Schedule')->create($user);
 		} catch (\Lookup\Api\Exception\InvalidArgumentException $e) {
 			return [
 				'error' => $e->getMessage(),
@@ -49,8 +46,13 @@ class AuthController extends AbaLookupController
 				'type'  => $type,
 			];
 		}
+
+		$id = $user->getId();
 		Session::setId($id);
-		return $this->redirect()->toRoute('users', array('id' => $id, 'action' => 'profile'));
+		return $this->redirect()->toRoute('users', array(
+			'id' => $id,
+			'action' => 'profile'
+		));
 	}
 
 	/**
@@ -68,16 +70,28 @@ class AuthController extends AbaLookupController
 			];
 		}
 
+		$userAccountApi = $this->getService('Lookup\Api\UserAccount');
+
 		$data = $this->params()->fromPost();
-		$id = $this->getService('Lookup\Api\UserAccount')->getByCredentials($data);
-		if (!$id) {
+		$account = $userAccountApi->getAccountForCredentials($data);
+
+		if (
+			   !$account
+			|| ($data['password'] !== $account->getPassword())
+		) {
 			return [
 				'error' => TRUE,
 				'form' => $form,
 			];
 		}
+
+		$user = $userAccountApi->getUserForAccount($account);
+		$id = $user->getId();
 		Session::setId($id, (bool) $data[$form::ELEMENT_NAME_REMEMBER_ME]);
-		return $this->redirect()->toRoute('users', array('id' => $id, 'action' => 'profile'));
+		return $this->redirect()->toRoute('users', array(
+			'id' => $id,
+			'action' => 'profile',
+		));
 	}
 
 	/**

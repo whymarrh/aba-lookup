@@ -2,21 +2,16 @@
 
 namespace AbaLookupTest\View\Helper;
 
-use
-	AbaLookup\View\Helper\Script,
-	PHPUnit_Framework_TestCase
-;
+use AbaLookup\View\Helper\Script;
+use PHPUnit_Framework_TestCase;
 
 class ScriptTest extends PHPUnit_Framework_TestCase
 {
 	/**
-	 * @var Script
+	 * @var \AbaLookup\View\Helper\Script
 	 */
 	protected $helper;
 
-	/**
-	 * Reset for isolation
-	 */
 	public function setUp()
 	{
 		$this->helper = new Script();

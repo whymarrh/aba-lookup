@@ -2,13 +2,14 @@
 
 namespace AbaLookupTest\View\Helper;
 
-use
-	AbaLookup\View\Helper\AnchorLink,
-	PHPUnit_Framework_TestCase
-;
+use AbaLookup\View\Helper\AnchorLink;
+use PHPUnit_Framework_TestCase;
 
 class AnchorLinkTest extends PHPUnit_Framework_TestCase
 {
+	/**
+	 * @var \AbaLookup\View\Helper\AnchorLink
+	 */
 	protected $helper;
 
 	public function setUp()

@@ -2,13 +2,14 @@
 
 namespace AbaLookupTest\View\Helper;
 
-use
-	AbaLookup\View\Helper\Stylesheet,
-	PHPUnit_Framework_TestCase
-;
+use AbaLookup\View\Helper\Stylesheet;
+use PHPUnit_Framework_TestCase;
 
 class StylesheetTest extends PHPUnit_Framework_TestCase
 {
+	/**
+	 * @var \AbaLookup\View\Helper\Stylesheet
+	 */
 	protected $helper;
 
 	public function setUp()

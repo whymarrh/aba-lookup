@@ -2,55 +2,20 @@
 
 namespace AbaLookupTest;
 
-use
-	AbaLookup\Entity\Schedule,
-	AbaLookup\Form\LoginForm
-;
+use Mockery;
 
-/**
- * Test the UsersController
- */
 class UsersControllerTest extends BaseControllerTestCase
 {
-	/**
-	 * Returns an array of actions to be tested
-	 */
-	public function authActions()
-	{
-		return [
-			['/users/register/parent', 'auth/register'],
-			['/users/register/therapist', 'auth/register'],
-			['/users/login', 'auth/login'],
-		];
-	}
-
 	/**
 	 * Returns an array of actions to be tested
 	 */
 	public function usersActions()
 	{
 		return [
-			['/users/1/profile', 'users'],
-			['/users/1/schedule', 'users'],
-			['/users/1/matches', 'users'],
+			['/users/c03fe04f-341b-41f5-9dde-3225228cdfc4/profile', 'users'],
+			['/users/c03fe04f-341b-41f5-9dde-3225228cdfc4/schedule', 'users'],
+			['/users/c03fe04f-341b-41f5-9dde-3225228cdfc4/matches', 'users'],
 		];
-	}
-
-	/**
-	 * Ensures the authentication actions for UsersController contains valid HTML
-	 *
-	 * @requires extension curl
-	 * @dataProvider authActions
-	 */
-	public function testAuthActionsContainValidHtml($url, $route)
-	{
-		$this->dispatch($url);
-		$this->assertResponseStatusCode(self::HTTP_STATUS_OK);
-		$this->assertModuleName('AbaLookup');
-		$this->assertControllerName('Users');
-		$this->assertControllerClass('UsersController');
-		$this->assertMatchedRouteName($route);
-		$this->assertValidHtml($this->getResponse()->getContent());
 	}
 
 	/**
@@ -63,54 +28,13 @@ class UsersControllerTest extends BaseControllerTestCase
 	 */
 	public function testRedirectsToLoginPage($url, $route)
 	{
+		$mockUserAccountApi = Mockery::mock('Lookup\Api\UserAccount', array(
+			'getById' => NULL,
+		));
+		$this->setService('Lookup\Api\UserAccount', $mockUserAccountApi);
+
 		$this->dispatch($url);
+		$this->assertResponseStatusCode(self::HTTP_STATUS_MOVED_TEMPORARILY);
 		$this->assertRedirectTo('/users/login');
-	}
-
-	/**
-	 * Ensures that a user can login
-	 *
-	 * @requires extension curl
-	 */
-	public function testUserCanLogin()
-	{
-		$user = $this->mockUser();
-		// Login page post data
-		$data = [
-			LoginForm::ELEMENT_NAME_EMAIL_ADDRESS => $user->getEmail(),
-			LoginForm::ELEMENT_NAME_PASSWORD      => 'password',
-			LoginForm::ELEMENT_NAME_REMEMBER_ME   => '0'
-		];
-		// Asserts for the login page
-		$this->dispatch('/users/login', 'POST', $data);
-		$this->assertModuleName('AbaLookup');
-		$this->assertControllerName('Users');
-		$this->assertControllerClass('UsersController');
-		$this->assertMatchedRouteName('auth/login');
-		$this->assertRedirectTo(sprintf('/users/%d/profile', $user->getId()));
-		// Pass along the session
-		return $_SESSION;
-	}
-
-	/**
-	 * Ensures that once logged in a user can access their pages
-	 *
-	 * @dataProvider usersActions
-	 * @depends testUserCanLogin
-	 */
-	public function testLoggedInUserCanAccessPages($url, $route, $session)
-	{
-		// Restore the session (post-'testUserCanLogin')
-		// Re-mock the user
-		$_SESSION = $session;
-		$this->mockUser();
-		// Dispatch the request and test the response
-		$this->dispatch($url);
-		$this->assertResponseStatusCode(self::HTTP_STATUS_OK);
-		$this->assertModuleName('AbaLookup');
-		$this->assertControllerName('Users');
-		$this->assertControllerClass('UsersController');
-		$this->assertMatchedRouteName($route);
-		$this->assertValidHtml($this->getResponse()->getContent());
 	}
 }

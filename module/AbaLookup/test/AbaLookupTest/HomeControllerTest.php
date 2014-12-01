@@ -2,9 +2,6 @@
 
 namespace AbaLookupTest;
 
-/**
- * Test the HomeController
- */
 class HomeControllerTest extends BaseControllerTestCase
 {
 	/**
@@ -23,7 +20,6 @@ class HomeControllerTest extends BaseControllerTestCase
 	/**
 	 * Ensures the actions for the HomeController can be accessed and contain valid HTML
 	 *
-	 * @requires extension curl
 	 * @dataProvider homeActions
 	 */
 	public function testActionsCanBeAccessedAndContainValidHtml($url, $route)
@@ -34,6 +30,5 @@ class HomeControllerTest extends BaseControllerTestCase
 		$this->assertControllerName('Home');
 		$this->assertControllerClass('HomeController');
 		$this->assertMatchedRouteName($route);
-		$this->assertValidHtml($this->getResponse()->getContent());
 	}
 }

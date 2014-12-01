@@ -1,6 +1,5 @@
 <?php
-	$this->headTitle('Schedule - ' . $this->user->getDisplayName());
-	$helper = $this->scheduleHelper($this->schedule);
+	$this->headTitle('Schedule - ' . $this->user->getDisplayName()->getDisplayName());
 ?>
 <div class="twelve columns">
 	<h2>Complete your schedule</h2>
@@ -16,17 +15,14 @@
 				<div class="twelve columns">
 				<label for="day">Day</label>
 				<select id="day" name="day">
-					<?php echo $helper->getSelectOptionsForDays(); ?>
 				</select>
 				from
 				<label for="start-time">Start time</label>
 				<select id="start-time" name="start-time">
-					<?php echo $helper->getSelectOptionsForTimes(); ?>
 				</select>
 				to
 				<label for="end-time">End time</label>
 				<select id="end-time" name="end-time">
-					<?php echo $helper->getSelectOptionsForTimes(1); ?>
 				</select>
 				</div>
 			</div>
@@ -47,7 +43,6 @@
 	</div>
 	<div class="row">
 		<div class="twelve columns schedule-wrapper">
-			<?php echo $helper->renderSchedule(['schedule']); ?>
 		</div>
 	</div>
 </div>

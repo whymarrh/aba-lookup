@@ -10,7 +10,7 @@ use
 ;
 
 error_reporting(E_ALL | E_STRICT);
-chdir(__DIR__);
+chdir(sprintf('%s/../../../', __DIR__));
 
 /**
  * PHPUnit bootstrap file

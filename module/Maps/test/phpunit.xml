@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phpunit bootstrap="Bootstrap.php" colors="true">
+	<testsuites>
+		<testsuite name="Maps Tests">
+			<directory>MapsTest</directory>
+		</testsuite>
+	</testsuites>
+	<filter>
+		<blacklist>
+			<file>../Module.php</file>
+			<directory suffix=".php">../test</directory>
+			<directory suffix=".php">../../../vendor</directory>
+		</blacklist>
+	</filter>
+</phpunit>
